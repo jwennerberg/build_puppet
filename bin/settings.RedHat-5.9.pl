@@ -1,0 +1,1 @@
+settings.CentOS-6.5.pl

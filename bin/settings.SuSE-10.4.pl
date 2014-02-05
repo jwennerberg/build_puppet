@@ -1,0 +1,1 @@
+settings.SuSE-10.3.pl
