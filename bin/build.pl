@@ -10,7 +10,7 @@ chop ($arch = `uname -p`);
 
 # Ensure basic paths are in environment. This way we do not have to know
 # exactly where binaries are on the different types of systems.
-$ENV{'PATH'} = "${ENV}{'PATH'}:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin";
+$ENV{'PATH'} = $ENV{'PATH'} . ':/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin';
 
 # used in FPM
 my $fpm_name = 'eispuppet';
