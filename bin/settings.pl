@@ -2,7 +2,8 @@
 #
 #
 
-$eis_puppet_version = '3.3.1-8' ;
+$eis_puppet_version = '3.3.1';
+$eis_puppet_release = '8';
 
 %pathmap = (
   'SunOS-5.9'  =>  "/opt/sfw/gcc-3/bin:/usr/ccs/bin:/usr/local/bin:/usr/bin:/bin:/usr/sfw/bin",
@@ -218,13 +219,13 @@ $puppet331 = {
   puppet331
 /;
 
-$target = $build_dir . "/packages/eisuppet-$platform-$eis_puppet_version.pkg" ;
+$target = $build_dir . "/packages/eisuppet-${platform}-${eis_puppet_version}-${eis_puppet_release}.pkg";
 
 @pkginfo = (
   'PKG="EISpuppet"',
   'NAME="eispuppet"',
   'ARCH="' . $platform_arch . '"',
-  'VERSION="' . $eis_puppet_version . '"',
+  'VERSION="' . $eis_puppet_version . '-' . $eis_puppet_release . '"',
   'CATEGORY="application"',
   'VENDOR="EIS Global Team"',
   'EMAIL="nils.olof.xo.paulsson@ericsson.com"',

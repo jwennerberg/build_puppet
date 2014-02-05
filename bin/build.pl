@@ -378,6 +378,7 @@ ${fpm} -n ${fpm_name} \\
   -t ${pkgtype} \\
   -C ${install_prefix}/ \\
   -s dir \\
+  --iteration '${eis_puppet_release}' \\
   --url '${fpm_url}' \\
   --vendor '${fpm_vendor}' \\
   --category '${fpm_category}' \\
@@ -388,7 +389,7 @@ ${fpm} -n ${fpm_name} \\
  --directories /etc/puppet \\
  --directories /var/lib/puppet \\
  -p ${top}/packages/${ostype}/${git_revision}/ \\
- $fpm_dirs /etc/rc.d/init.d/puppet
+ $fpm_dirs ./etc/rc.d/init.d/puppet
 EOM
 
     print "\n################### Packaging for ${pkgtype} with:\n$fpm_command\n";
