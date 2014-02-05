@@ -377,6 +377,7 @@ ${fpm} -n ${fpm_name} \\
   -t ${pkgtype} \\
   -C / \\
   -s dir \\
+  --iteration '${eis_puppet_release}.${osver}' \\
   --url '${fpm_url}' \\
   --vendor '${fpm_vendor}' \\
   --category '${fpm_category}' \\
