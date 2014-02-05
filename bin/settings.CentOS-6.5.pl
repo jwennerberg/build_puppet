@@ -13,7 +13,7 @@ $libxml2291 = {
   'extract'   => 'gunzip -c  %PKGSRC% | tar xvf - ',
   'configure' => "make clean; ./configure --prefix=${prefix} LDFLAGS=-static-libgcc --without-python",
   'make'      => 'make',
-  'install'   => 'make install',
+  'install'   => 'make install DESTDIR=' . $install_prefix,
   'env' => {
     'PATH'          => $pathmap {$platform_os} || '/bin:/usr/bin',
     'LIBXML_CFLAGS' => "-I${prefix}/libxml2",

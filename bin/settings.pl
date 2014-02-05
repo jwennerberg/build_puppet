@@ -2,7 +2,7 @@
 #
 #
 
-$eis_puppet_version = '3.3.1-7' ;
+$eis_puppet_version = '3.3.1-8' ;
 
 %pathmap = (
   'SunOS-5.9'  =>  "/opt/sfw/gcc-3/bin:/usr/ccs/bin:/usr/local/bin:/usr/bin:/bin:/usr/sfw/bin",
@@ -18,7 +18,7 @@ $zlib128 = {
   'extract'    => 'gunzip -c  %PKGSRC% | tar xvf -',
   'configure' => 'make clean; ./configure --prefix=' . $prefix,
   'make'      => 'make',
-  'install'   => 'make install',
+  'install'   => 'make install DESTDIR=' . $install_prefix,
   'env'       => {
     'LDFLAGS' => '-static-libgcc',
     'PATH'    => $pathmap {$platform_os} || '/bin:/usr/bin',
@@ -34,7 +34,7 @@ $openssl101e = {
 # requires the compiler label for the platform and must be os/platform specific
 #  'configure' => "./Configure  -L${prefix}/lib -I${prefix}/include -R${prefix}/lib shared zlib-dynamic --prefix=${prefix} --openssldir=${prefix} solaris-x86-gcc -static-libgcc",
   'make'      => 'make',
-  'install'   => 'make install',
+  'install'   => 'make INSTALL_PREFIX=' . $install_prefix . ' install',
   'env'       => {
     'LDFLAGS' => '-static-libgcc',
     'PATH'    => $pathmap {$platform_os} || '/bin:/usr/bin',
@@ -49,7 +49,7 @@ $libxml2291 = {
   'extract'    => "gunzip -c  %PKGSRC% | tar xvf -",
   'configure' => "make clean; ./configure --prefix=${prefix} LDFLAGS=-static-libgcc ",
   'make'      => 'make',
-  'install'   => 'make install',
+  'install'   => 'make install DESTDIR=' . $install_prefix,
   'env' => {
     'PATH' => $pathmap {$platform_os} || '/bin:/usr/bin',
   },
@@ -63,7 +63,7 @@ $libiconv114 = {
   'extract'    => 'gunzip -c  %PKGSRC% | tar xvf -',
   'configure' => "make clean; ./configure --prefix=${prefix} LDFLAGS=-static-libgcc ",
   'make'      => 'make',
-  'install'   => 'make install',
+  'install'   => 'make install DESTDIR=' . $install_prefix,
   'env' => {
     'PATH' => $pathmap {$platform_os} || '/bin:/usr/bin',
   },
@@ -77,7 +77,7 @@ $ncurses59 = {
   'extract'    => 'gunzip -c  %PKGSRC% | tar xvf -',
   'configure'	=> "make clean; ./configure --prefix=${prefix} --with-terminfo-dirs=/usr/share/lib/terminfo --enable-termcap CFLAGS=-fPIC LDFLAGS=-static-libgcc ",
   'make'	    => 'make',
-  'install'   => 'make install',
+  'install'   => 'make install DESTDIR=' . $install_prefix,
   'env' => {
     'PATH' => $pathmap {$platform_os} || '/bin:/usr/bin',
   },
@@ -91,7 +91,7 @@ $ruby187p358 = {
   'extract'    => 'gunzip -c  %PKGSRC% | tar xvf -',
   'configure' => "make clean; ./configure --prefix=${prefix} LDFLAGS=\'-static-libgcc -L${prefix}/lib -R${prefix}/lib\' CPPFLAGS=-I${prefix}/include",
   'make'      => 'make',
-  'install'   => 'make install',
+  'install'   => 'make install DESTDIR=' . $install_prefix,
   'env' => {
     'PATH' => $pathmap {$platform_os} || '/bin:/usr/bin',
   },
@@ -122,7 +122,7 @@ $readline62 = {
   'extract'   => 'gunzip -c  %PKGSRC% | tar xvf -',
   'configure' => "make clean; ./configure --with-curses --prefix=${prefix} CFLAGS=-static-libgcc",
   'make'      => 'make',
-  'install'   => 'make install',
+  'install'   => 'make install DESTDIR=' . $install_prefix,
   'env' => {
     'PATH' => $pathmap {$platform_os} || '/bin:/usr/bin',
   },
@@ -136,7 +136,7 @@ $augeas110 = {
   'extract'   => 'gunzip -c  %PKGSRC% | tar xvf -',
   'configure' => "make clean; ./configure --prefix=${prefix} CPPFLAGS=-I${prefix}/include LDFLAGS=\"-L${prefix}/lib -R${prefix}/lib -lcurses\" CFLAGS=-static-libgcc",
   'make'      => 'gmake',
-  'install'   => 'gmake install',
+  'install'   => 'gmake install DESTDIR=' . $install_prefix,
   'env' => {
     'PATH'          => $pathmap {$platform_os} || '/bin:/usr/bin',
     'LIBXML_CFLAGS' => "-I${prefix}/include/libxml2",
@@ -152,7 +152,7 @@ $ruby_augeas050 = {
   'extract'   => 'gunzip -c  %PKGSRC% | tar xvf -',
   'configure' => "cd ext/augeas ; echo \"require 'mkmf' ; extension_name = '_augeas' ; create_makefile(extension_name)\" > ee2.rb ; ${prefix}/bin/ruby ee2.rb ; cd ../..",
   'make'      => "cd ext/augeas ; gmake CC=\"gcc -I${prefix}/include/libxml2 -laugeas\" ; cd ../..",
-  'install'   => "cp lib/augeas.rb ${prefix}/lib/ruby/site_ruby/1.8 ; cd ext/augeas ; gmake install; ",
+  'install'   => "cp lib/augeas.rb ${install_prefix}/${prefix}/lib/ruby/site_ruby/1.8 ; cd ext/augeas ; gmake install DESTDIR=${install_prefix}; ",
   'env' => {
     'PATH'          => $pathmap {$platform_os} || '/bin:/usr/bin',
     "LIBXML_CFLAGS" => "-I${prefix}/include/libxml2",
@@ -169,7 +169,7 @@ $rubyshadow214 = {
   'extract'    => "rsync -avp ${build_dir}/tgzs/ruby-shadow/ ${src}/ruby-shadow/",
   'configure' => "make clean; ${prefix}/bin/ruby extconf.rb",
   'make'      => 'gmake CC=\'gcc -static-libgcc\'',
-  'install'   => 'gmake install',
+  'install'   => 'gmake install DESTDIR=' . $install_prefix,
   'env' => {
     'CFLAGS' => '-static-libgcc',
     'PATH'   => $pathmap {$platform_os} || '/bin:/usr/bin',
@@ -182,7 +182,7 @@ $facter173 = {
   'pkgsrc'  => $build_dir . '/tgzs/facter-1.7.3.tar.gz',
   'srcdir'  => "${src}/facter-1.7.3",
   'extract' => 'gunzip -c  %PKGSRC% | tar xf -',
-  'install' => "${prefix}/bin/ruby install.rb",
+  'install' => "${install_prefix}/${prefix}/bin/ruby install.rb --destdir=${install_prefix}",
 };
 
 $hiera121 = {
@@ -191,7 +191,7 @@ $hiera121 = {
   'pkgsrc'  => $build_dir . '/tgzs/hiera-1.2.1.tar.gz',
   'srcdir'  => "${src}/hiera-1.2.1",
   'extract' => "gunzip -c %PKGSRC% | tar xf -",
-  'install' => "test -f install.rb || cp ${top}/patches/hiera/install.rb . ; ${prefix}/bin/ruby install.rb --no-configs",
+  'install' => "test -f install.rb || cp ${top}/patches/hiera/install.rb . ; ${install_prefix}/${prefix}/bin/ruby install.rb --no-configs --destdir=${install_prefix}",
 };
 
 $puppet331 = {
@@ -200,7 +200,7 @@ $puppet331 = {
   'pkgsrc'  => $build_dir . '/tgzs/puppet-3.3.1.tar.gz',
   'srcdir'  => "${src}/puppet-3.3.1",
   'extract' => 'gunzip -c  %PKGSRC% | tar xvf -',
-  'install' => "${prefix}/bin/ruby install.rb --no-configs",
+  'install' => "${install_prefix}/${prefix}/bin/ruby install.rb --no-configs --destdir=${install_prefix}",
 };
 
 @packages = qw/

@@ -22,10 +22,7 @@ my $fpm_maintainer = 'eis-nix-global-team@mailman.lmera.ericsson.se';
 my $fpm_description = 'puppet agent and its prerequisites';
 
 # directories which should exist under /
-my $fpm_dirs = '/opt/puppet /etc/puppet /var/log/puppet /var/run/puppet /var/lib/puppet';
-
-# build dir structure for fpm
-system "for i in ${fpm_dirs}; do mkdir -p \$i; done";
+my $fpm_dirs = './opt/puppet ./etc/puppet ./var/log/puppet ./var/run/puppet ./var/lib/puppet';
 
 my $fpm = 'fpm';
 my ($os, $rev) = (`uname -s`, `uname -r`);
@@ -101,6 +98,10 @@ $top = getcwd;
 $build_dir = $top . '/builds';
 $src = $build_dir. '/src.' . $hostname;
 $prefix = '/opt/puppet';
+$install_prefix = $build_dir. '/fpm.' . $hostname;
+
+# build dir structure for fpm
+system "for i in ${fpm_dirs}; do mkdir -p ${install_prefix}/\$i; done";
 
 # set git_revision
 chdir $top;
@@ -367,15 +368,15 @@ if ($packit eq "yes") {
       $pkgtype = 'rpm';
     }
 
-    system "rsync -avp ${top}/fpmtop/etc/ /etc/";
-    system "rsync -avp ${top}/fpmtop/${osver}/ /";
-    chdir '/';
+    system "rsync -avp ${top}/fpmtop/etc/ ${install_prefix}/etc/";
+    system "rsync -avp ${top}/fpmtop/${osver}/ ${install_prefix}/";
+    chdir '${install_prefix}/';
 
     $fpm_command = <<EOM;
 ${fpm} -n ${fpm_name} \\
   -v ${eis_puppet_version} \\
   -t ${pkgtype} \\
-  -C / \\
+  -C ${install_prefix}/ \\
   -s dir \\
   --url '${fpm_url}' \\
   --vendor '${fpm_vendor}' \\
@@ -387,7 +388,7 @@ ${fpm} -n ${fpm_name} \\
  --directories /etc/puppet \\
  --directories /var/lib/puppet \\
  -p ${top}/packages/${ostype}/${git_revision}/ \\
- $fpm_dirs /etc/init.d/puppet
+ $fpm_dirs /etc/rc.d/init.d/puppet
 EOM
 
     print "\n################### Packaging for ${pkgtype} with:\n$fpm_command\n";
