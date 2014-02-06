@@ -16,7 +16,7 @@ $libxml2291 = {
   'install'   => 'make install DESTDIR=' . $install_prefix,
   'env' => {
     'PATH'          => $pathmap {$platform_os} || '/bin:/usr/bin',
-    'LIBXML_CFLAGS' => "-I${prefix}/libxml2",
+    'LIBXML_CFLAGS' => "-I${install_prefix}/${prefix}/libxml2",
     'LIBXML_LIBS'   => '-lxml2',
   },
 };
@@ -25,15 +25,15 @@ unshift @packages, 'libxml2291',;
 
 $openssl101e = {
   %{$openssl101e},
-  'configure' => "make clean; ./Configure  -L${prefix}/lib -I${prefix}/include shared zlib-dynamic --prefix=${prefix} --openssldir=${prefix} ${openssl_compiler} -static-libgcc",
+  'configure' => "make clean; ./Configure  -L${install_prefix}/${prefix}/lib -I${install_prefix}/${prefix}/include shared zlib-dynamic --prefix=${prefix} --openssldir=${prefix} ${openssl_compiler} -static-libgcc",
 };
 
 $ruby187p358 = {
   %{$ruby187p358},
-  'configure' => "make clean; ./configure --prefix=${prefix} LDFLAGS=\'-static-libgcc -L${prefix}/lib -Wl,-rpath,${prefix}/lib \' CPPFLAGS=-I${prefix}/include",
+  'configure' => "make clean; ./configure --prefix=${prefix} LDFLAGS=\'-static-libgcc -L${install_prefix}/${prefix}/lib -Wl,-rpath,${prefix}/lib \' CPPFLAGS=-I${install_prefix}/${prefix}/include",
 };
 
 $augeas110 = {
   %{$augeas110},
-  'configure' => "make clean; ./configure --prefix=${prefix} CPPFLAGS=-I${prefix}/include LDFLAGS=\'-L${prefix}/lib -Wl,-rpath,${prefix}/lib\' CFLAGS=\'-static-libgcc -lncurses\'",
+  'configure' => "make clean; ./configure --prefix=${prefix} CPPFLAGS=-I${install_prefix}/${prefix}/include LDFLAGS=\'-L${install_prefix}/${prefix}/lib -Wl,-rpath,${prefix}/lib\' CFLAGS=\'-static-libgcc -lncurses\'",
 };

@@ -90,7 +90,7 @@ $ruby187p358 = {
   'pkgsrc'    => $build_dir . '/tgzs/ruby-1.8.7-p358.tar.gz',
   'srcdir'    => "${src}/ruby-1.8.7-p358",
   'extract'    => 'gunzip -c  %PKGSRC% | tar xvf -',
-  'configure' => "make clean; ./configure --prefix=${prefix} LDFLAGS=\'-static-libgcc -L${prefix}/lib -R${prefix}/lib\' CPPFLAGS=-I${prefix}/include",
+  'configure' => "make clean; ./configure --prefix=${prefix} LDFLAGS=\'-static-libgcc -L${install_prefix}/${prefix}/lib -R${prefix}/lib\' CPPFLAGS=-I${install_prefix}/${prefix}/include",
   'make'      => 'make',
   'install'   => 'make install DESTDIR=' . $install_prefix,
   'env' => {
@@ -135,12 +135,12 @@ $augeas110 = {
   'pkgsrc'    => "${build_dir}/tgzs/augeas-1.1.0.tar.gz",
   'srcdir'    => "${src}/augeas-1.1.0",
   'extract'   => 'gunzip -c  %PKGSRC% | tar xvf -',
-  'configure' => "make clean; ./configure --prefix=${prefix} CPPFLAGS=-I${prefix}/include LDFLAGS=\"-L${prefix}/lib -R${prefix}/lib -lcurses\" CFLAGS=-static-libgcc",
+  'configure' => "make clean; ./configure --prefix=${prefix} CPPFLAGS=-I${install_prefix}/${prefix}/include LDFLAGS=\"-L${install_prefix}/${prefix}/lib -R${prefix}/lib -lcurses\" CFLAGS=-static-libgcc",
   'make'      => 'gmake',
   'install'   => 'gmake install DESTDIR=' . $install_prefix,
   'env' => {
     'PATH'          => $pathmap {$platform_os} || '/bin:/usr/bin',
-    'LIBXML_CFLAGS' => "-I${prefix}/include/libxml2",
+    'LIBXML_CFLAGS' => "-I${install_prefix}/${prefix}/include/libxml2",
     'LIBXML_LIBS'   => '-lxml2',
   },
 };
@@ -151,12 +151,12 @@ $ruby_augeas050 = {
   'pkgsrc'    => "${build_dir}/tgzs/ruby-augeas-0.5.0.tgz",
   'srcdir'    => "${src}/ruby-augeas-0.5.0",
   'extract'   => 'gunzip -c  %PKGSRC% | tar xvf -',
-  'configure' => "cd ext/augeas ; echo \"require 'mkmf' ; extension_name = '_augeas' ; create_makefile(extension_name)\" > ee2.rb ; ${prefix}/bin/ruby ee2.rb ; cd ../..",
-  'make'      => "cd ext/augeas ; gmake CC=\"gcc -I${prefix}/include/libxml2 -laugeas\" ; cd ../..",
+  'configure' => "cd ext/augeas ; echo \"require 'mkmf' ; extension_name = '_augeas' ; create_makefile(extension_name)\" > ee2.rb ; ${install_prefix}/${prefix}/bin/ruby ee2.rb ; cd ../..",
+  'make'      => "cd ext/augeas ; gmake CC=\"gcc -I${install_prefix}/${prefix}/include/libxml2 -laugeas\" ; cd ../..",
   'install'   => "cp lib/augeas.rb ${install_prefix}/${prefix}/lib/ruby/site_ruby/1.8 ; cd ext/augeas ; gmake install DESTDIR=${install_prefix}; ",
   'env' => {
     'PATH'          => $pathmap {$platform_os} || '/bin:/usr/bin',
-    "LIBXML_CFLAGS" => "-I${prefix}/include/libxml2",
+    "LIBXML_CFLAGS" => "-I${install_prefix}/${prefix}/include/libxml2",
     'LIBXML_LIBS'   => '-lxml2',
   },
 };
