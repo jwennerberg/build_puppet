@@ -11,7 +11,7 @@ $libxml2291 = {
   'pkgsrc'    => $build_dir . '/tgzs/libxml2-2.9.1.tar.gz',
   'srcdir'    => "${src}/libxml2-2.9.1",
   'extract'   => 'gunzip -c  %PKGSRC% | tar xvf - ',
-  'configure' => "make clean; ./configure --prefix=${prefix} LDFLAGS=-static-libgcc --without-python",
+  'configure' => "make clean; ./configure --prefix=${prefix} --without-python LDFLAGS=-static-libgcc",
   'make'      => 'make',
   'install'   => 'make install',
   'env' => {
@@ -33,7 +33,22 @@ $ruby187p358 = {
   'configure' => "make clean; ./configure --prefix=${prefix} LDFLAGS=\'-static-libgcc -L${prefix}/lib -Wl,-rpath,${prefix}/lib \' CPPFLAGS=-I${prefix}/include",
 };
 
+$ruby193p547 = {
+  %{$ruby193p547},
+  'configure' => "make clean; ./configure --prefix=${prefix} LDFLAGS=\'-static-libgcc -L${prefix}/lib -Wl,-rpath,${prefix}/lib \' CPPFLAGS=-I${prefix}/include",
+};
+
+$ruby200p481 = {
+  %{$ruby200p481},
+  'configure' => "make clean; ./configure --prefix=${prefix} LDFLAGS=\'-static-libgcc -L${prefix}/lib -Wl,-rpath,${prefix}/lib \' CPPFLAGS=-I${prefix}/include",
+};
+
 $augeas110 = {
   %{$augeas110},
   'configure' => "make clean; ./configure --prefix=${prefix} CPPFLAGS=-I${prefix}/include LDFLAGS=\'-L${prefix}/lib -Wl,-rpath,${prefix}/lib\' CFLAGS=\'-static-libgcc -lncurses\'",
+};
+
+$ruby_augeas050 = {
+  %{$ruby_augeas050},
+  'install' => "cp lib/augeas.rb ${prefix}/lib/ruby/site_ruby/2.0.0 ; cd ext/augeas ; gmake install; ",
 };

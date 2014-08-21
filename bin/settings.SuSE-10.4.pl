@@ -1,1 +1,3 @@
-settings.SuSE-10.3.pl
+require "${build_dir}/bin/settings.CentOS-6.4.pl";
+
+1;
