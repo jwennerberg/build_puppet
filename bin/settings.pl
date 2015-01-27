@@ -2,7 +2,7 @@
 #
 #
 
-$eis_puppet_version = '3.6.2';
+$eis_puppet_version = '3.7.3';
 $eis_puppet_release = '1';
 
 %pathmap = (
@@ -26,11 +26,11 @@ $zlib128 = {
   },
 };
 
-$openssl101g = {
-  'name'      => 'openssl 1.0.1g',
-  'fetch'     => 'wget http://www.openssl.org/source/openssl-1.0.1g.tar.gz',
-  'pkgsrc'    => $build_dir . '/tgzs/openssl-1.0.1g.tar.gz',
-  'srcdir'    => $src . '/openssl-1.0.1g',
+$openssl101l = {
+  'name'      => 'openssl 1.0.1l',
+  'fetch'     => 'wget http://www.openssl.org/source/openssl-1.0.1l.tar.gz',
+  'pkgsrc'    => $build_dir . '/tgzs/openssl-1.0.1l.tar.gz',
+  'srcdir'    => $src . '/openssl-1.0.1l',
   'extract'    => 'gunzip -c  %PKGSRC% | tar xvf -',
 # requires the compiler label for the platform and must be os/platform specific
 #  'configure' => "./Configure  -L${prefix}/lib -I${prefix}/include -R${prefix}/lib shared zlib-dynamic --prefix=${prefix} --openssldir=${prefix} solaris-x86-gcc -static-libgcc",
@@ -42,11 +42,11 @@ $openssl101g = {
   },
 };
 
-$libxml2291 = {
-  'name'	=> 'libxml2-2.9.1',
-  'fetch'	=> 'wget wget ftp://xmlsoft.org/libxml2/libxml2-2.9.1.tar.gz',
-  'pkgsrc'	=> $build_dir . '/tgzs/libxml2-2.9.1.tar.gz',
-  'srcdir'	=> "${src}/libxml2-2.9.1",
+$libxml2292 = {
+  'name'	=> 'libxml2-2.9.2',
+  'fetch'	=> 'wget wget ftp://xmlsoft.org/libxml2/libxml2-2.9.2.tar.gz',
+  'pkgsrc'	=> $build_dir . '/tgzs/libxml2-2.9.2.tar.gz',
+  'srcdir'	=> "${src}/libxml2-2.9.2",
   'extract'    => "gunzip -c  %PKGSRC% | tar xvf -",
   'configure' => "make clean; ./configure --prefix=${prefix} LDFLAGS=-static-libgcc ",
   'make'      => 'make',
@@ -63,6 +63,20 @@ $libiconv114 = {
   'srcdir'    => "${src}/libiconv-1.14",
   'extract'    => 'gunzip -c  %PKGSRC% | tar xvf -',
   'configure' => "make clean; ./configure --prefix=${prefix} LDFLAGS=-static-libgcc ",
+  'make'      => 'make',
+  'install'   => 'make install',
+  'env' => {
+    'PATH' => $pathmap {$platform_os} || '/bin:/usr/bin',
+  },
+};
+
+$libyaml015 = {
+  'name'      => 'libyaml-0.1.5',
+  'fetch'     => 'wget http://pyyaml.org/download/libyaml/yaml-0.1.5.tar.gz',
+  'pkgsrc'    => $build_dir . '/tgzs/yaml-0.1.5.tar.gz',
+  'srcdir'    => "${src}/yaml-0.1.5",
+  'extract'    => 'gunzip -c  %PKGSRC% | tar xvf -',
+  'configure' => "make clean; ./configure --prefix=${prefix}",
   'make'      => 'make',
   'install'   => 'make install',
   'env' => {
@@ -112,13 +126,13 @@ $ruby193p547 = {
   },
 };
 
-$ruby200p481 = {
+$ruby200p598 = {
   'name'      => 'ruby-2.0.0',
-  'fetch'     => 'wget ftp://ftp.ruby-lang.org/pub/ruby/ruby-2.0.0-p481.tar.gz',
-  'pkgsrc'    => $build_dir . '/tgzs/ruby-2.0.0-p481.tar.gz',
-  'srcdir'    => "${src}/ruby-2.0.0-p481",
+  'fetch'     => 'wget ftp://ftp.ruby-lang.org/pub/ruby/ruby-2.0.0-p598.tar.gz',
+  'pkgsrc'    => $build_dir . '/tgzs/ruby-2.0.0-p598.tar.gz',
+  'srcdir'    => "${src}/ruby-2.0.0-p598",
   'extract'    => 'gunzip -c  %PKGSRC% | tar xvf -',
-  'configure' => "make clean; ./configure --prefix=${prefix} LDFLAGS=\'-static-libgcc -L${prefix}/lib -R${prefix}/lib\' CPPFLAGS=-I${prefix}/include",
+  'configure' => "make clean; ./configure --disable-install-doc --prefix=${prefix} LDFLAGS=\'-static-libgcc -L${prefix}/lib -R${prefix}/lib\' CPPFLAGS=-I${prefix}/include",
   'make'      => 'make',
   'install'   => 'make install',
   'env' => {
@@ -126,28 +140,11 @@ $ruby200p481 = {
   },
 };
 
-#
-# Testing. Not actually in use.
-#
-$ruby193p448 = {
-  'name'      => 'ruby-1.9.3',
-  'fetch'     => 'wget ftp://ftp.ruby-lang.org/pub/ruby/ruby-1.9.3-p448.tar.gz',
-  'pkgsrc'    => $build_dir . '/tgzs/ruby-1.9.3-p448.tar.gz',
-  'srcdir'    => "${src}/ruby-1.9.3-p448",
-  'extract'    => 'gunzip -c  %PKGSRC% | tar xvf -',
-  'configure' => "make clean; ./configure --prefix=${prefix} LDFLAGS=\'-static-libgcc -L${prefix}/lib -R${prefix}/lib\' CPPFLAGS=-I${prefix}/include",
-  'make'      => 'make',
-  'install'   => 'make install',
-  'env' => {
-    'PATH' => $pathmap {$platform_os} || '/bin:/usr/bin',
-  },
-};
-
-$readline62 = {
-  'name'      => 'Readline 6.2',
-  'fetch'     => 'wget http://ftp.gnu.org/gnu/readline/readline-6.2.tar.gz',
-  'pkgsrc'    => "${build_dir}/tgzs/readline-6.2.tar.gz",
-  'srcdir'    => "${src}/readline-6.2",
+$readline63 = {
+  'name'      => 'Readline 6.3',
+  'fetch'     => 'wget http://ftp.gnu.org/gnu/readline/readline-6.3.tar.gz',
+  'pkgsrc'    => "${build_dir}/tgzs/readline-6.3.tar.gz",
+  'srcdir'    => "${src}/readline-6.3",
   'extract'   => 'gunzip -c  %PKGSRC% | tar xvf -',
   'configure' => "make clean; ./configure --with-curses --prefix=${prefix} CFLAGS=-static-libgcc",
   'make'      => 'make',
@@ -189,22 +186,6 @@ $ruby_augeas050 = {
   },
 };
 
-$rubyshadow214 = {
-  'name'      => 'ruby-shadow 2.1.4',
-  'fetch'     => 'git clone https://github.com/apalmblad/ruby-shadow.git && cd ruby-shadow && git checkout 2.1.4',
-  'pkgsrc'    => $build_dir . '/tgzs/ruby-shadow',
-  'srcdir'    => "${src}/ruby-shadow",
-#  'extract'    => "cp -r ${build_dir}/tgzs/ruby-shadow ${src}/ruby-shadow",
-  'extract'    => "rsync -avp ${build_dir}/tgzs/ruby-shadow/ ${src}/ruby-shadow/",
-  'configure' => "make clean; ${prefix}/bin/ruby extconf.rb",
-  'make'      => 'gmake CC=\'gcc -static-libgcc\'',
-  'install'   => 'gmake install',
-  'env' => {
-    'CFLAGS' => '-static-libgcc',
-    'PATH'   => $pathmap {$platform_os} || '/bin:/usr/bin',
-  },
-};
-
 $rubyshadow234 = {
   'name'      => 'ruby-shadow 2.3.4',
   'fetch'     => 'git clone https://github.com/apalmblad/ruby-shadow.git && cd ruby-shadow && git checkout 2.3.4',
@@ -221,15 +202,6 @@ $rubyshadow234 = {
   },
 };
 
-$facter173 = {
-  'name'    => 'Facter 1.7.3',
-  'fetch'   => 'wget http://downloads.puppetlabs.com/facter/facter-1.7.3.tar.gz',
-  'pkgsrc'  => $build_dir . '/tgzs/facter-1.7.3.tar.gz',
-  'srcdir'  => "${src}/facter-1.7.3",
-  'extract' => 'gunzip -c  %PKGSRC% | tar xf -',
-  'install' => "${prefix}/bin/ruby install.rb",
-};
-
 $facter176 = {
   'name'    => 'Facter 1.7.6',
   'fetch'   => 'wget http://downloads.puppetlabs.com/facter/facter-1.7.6.tar.gz',
@@ -237,15 +209,6 @@ $facter176 = {
   'srcdir'  => "${src}/facter-1.7.6",
   'extract' => 'gunzip -c  %PKGSRC% | tar xf -',
   'install' => "${prefix}/bin/ruby install.rb",
-};
-
-$hiera121 = {
-  'name'    => 'Hiera 1.2.1',
-  'fetch'   => 'wget http://downloads.puppetlabs.com/hiera/hiera-1.2.1.tar.gz',
-  'pkgsrc'  => $build_dir . '/tgzs/hiera-1.2.1.tar.gz',
-  'srcdir'  => "${src}/hiera-1.2.1",
-  'extract' => "gunzip -c %PKGSRC% | tar xf -",
-  'install' => "test -f install.rb || cp ${top}/patches/hiera/install.rb . ; ${prefix}/bin/ruby install.rb --no-configs",
 };
 
 $hiera134 = {
@@ -257,20 +220,11 @@ $hiera134 = {
   'install' => "${prefix}/bin/ruby install.rb --no-configs",
 };
 
-$puppet331 = {
-  'name'    => 'Puppet 3.3.1',
-  'fetch'   => 'wget http://downloads.puppetlabs.com/puppet/puppet-3.3.1.tar.gz',
-  'pkgsrc'  => $build_dir . '/tgzs/puppet-3.3.1.tar.gz',
-  'srcdir'  => "${src}/puppet-3.3.1",
-  'extract' => 'gunzip -c  %PKGSRC% | tar xvf -',
-  'install' => "${prefix}/bin/ruby install.rb --no-configs",
-};
-
-$puppet362 = {
-  'name'    => 'Puppet 3.6.2',
-  'fetch'   => 'wget http://downloads.puppetlabs.com/puppet/puppet-3.6.2.tar.gz',
-  'pkgsrc'  => $build_dir . '/tgzs/puppet-3.6.2.tar.gz',
-  'srcdir'  => "${src}/puppet-3.6.2",
+$puppet373 = {
+  'name'    => 'Puppet 3.7.3',
+  'fetch'   => 'wget http://downloads.puppetlabs.com/puppet/puppet-3.7.3.tar.gz',
+  'pkgsrc'  => $build_dir . '/tgzs/puppet-3.7.3.tar.gz',
+  'srcdir'  => "${src}/puppet-3.7.3",
   'extract' => 'gunzip -c  %PKGSRC% | tar xvf -',
   'install' => "${prefix}/bin/ruby install.rb --no-configs",
 };
@@ -279,28 +233,29 @@ $puppet362 = {
   libiconv114
   zlib128
   ncurses59
-  readline62
-  openssl101g
-  ruby200p481
+  readline63
+  openssl101l
+  libyaml015
+  ruby200p598
   rubyshadow234
   augeas110
   ruby_augeas050
   hiera134
   facter176
-  puppet362
+  puppet373
 /;
 
 $target = $build_dir . "/packages/eisuppet-${platform}-${eis_puppet_version}-${eis_puppet_release}.pkg";
 
 @pkginfo = (
-  'PKG="EISpuppet"',
+  'PKG="eispuppet"',
   'NAME="eispuppet"',
   'ARCH="' . $platform_arch . '"',
   'VERSION="' . $eis_puppet_version . '-' . $eis_puppet_release . '"',
   'CATEGORY="application"',
-  'VENDOR="EIS Global Team"',
-  'EMAIL="nils.olof.xo.paulsson@ericsson.com"',
-  'PSTAMP="Nils Olof Paulsson"',
+  'VENDOR="EIS"',
+  'EMAIL="eis-puppet@mailman.lmera.ericsson.com"',
+  'PSTAMP="Johan Wennerberg X"',
   'BASEDIR="/opt/puppet"',
   'CLASSES="none"',
 );
