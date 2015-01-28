@@ -220,11 +220,11 @@ $hiera134 = {
   'install' => "${prefix}/bin/ruby install.rb --no-configs",
 };
 
-$puppet373 = {
-  'name'    => 'Puppet 3.7.3',
-  'fetch'   => 'wget http://downloads.puppetlabs.com/puppet/puppet-3.7.3.tar.gz',
-  'pkgsrc'  => $build_dir . '/tgzs/puppet-3.7.3.tar.gz',
-  'srcdir'  => "${src}/puppet-3.7.3",
+$puppet374 = {
+  'name'    => 'Puppet 3.7.4',
+  'fetch'   => 'wget http://downloads.puppetlabs.com/puppet/puppet-3.7.4.tar.gz',
+  'pkgsrc'  => $build_dir . '/tgzs/puppet-3.7.4.tar.gz',
+  'srcdir'  => "${src}/puppet-3.7.4",
   'extract' => 'gunzip -c  %PKGSRC% | tar xvf -',
   'install' => "${prefix}/bin/ruby install.rb --no-configs",
 };
@@ -242,7 +242,7 @@ $puppet373 = {
   ruby_augeas050
   hiera134
   facter176
-  puppet373
+  puppet374
 /;
 
 $target = $build_dir . "/packages/eisuppet-${platform}-${eis_puppet_version}-${eis_puppet_release}.pkg";
