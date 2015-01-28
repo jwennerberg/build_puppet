@@ -178,7 +178,7 @@ $ruby_augeas050 = {
   'extract'   => 'gunzip -c  %PKGSRC% | tar xvf -',
   'configure' => "cd ext/augeas ; echo \"require 'mkmf' ; extension_name = '_augeas' ; create_makefile(extension_name)\" > ee2.rb ; ${prefix}/bin/ruby ee2.rb ; cd ../..",
   'make'      => "cd ext/augeas ; gmake CC=\"gcc -I${prefix}/include/libxml2 -laugeas\" ; cd ../..",
-  'install'   => "cp lib/augeas.rb ${prefix}/lib/ruby/site_ruby/1.8 ; cd ext/augeas ; gmake install; ",
+  'install'   => "cp lib/augeas.rb ${prefix}/lib/ruby/site_ruby/2.0.0 ; cd ext/augeas ; gmake install; ",
   'env' => {
     'PATH'          => $pathmap {$platform_os} || '/bin:/usr/bin',
     "LIBXML_CFLAGS" => "-I${prefix}/include/libxml2",
