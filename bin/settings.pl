@@ -2,7 +2,7 @@
 #
 #
 
-$eis_puppet_version = '3.7.3';
+$eis_puppet_version = '3.7.4';
 $eis_puppet_release = '1';
 
 %pathmap = (
