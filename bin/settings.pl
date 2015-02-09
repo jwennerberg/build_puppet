@@ -188,11 +188,10 @@ $ruby_augeas050 = {
 
 $rubyshadow234 = {
   'name'      => 'ruby-shadow 2.3.4',
-  'fetch'     => 'git clone https://github.com/apalmblad/ruby-shadow.git && cd ruby-shadow && git checkout 2.3.4',
-  'pkgsrc'    => $build_dir . '/tgzs/ruby-shadow',
-  'srcdir'    => "${src}/ruby-shadow",
-#  'extract'    => "cp -r ${build_dir}/tgzs/ruby-shadow ${src}/ruby-shadow",
-  'extract'    => "rsync -avp ${build_dir}/tgzs/ruby-shadow/ ${src}/ruby-shadow/",
+  'fetch'     => 'wget -O ruby-shadow-2.3.4.zip http://github.com/apalmblad/ruby-shadow/archive/2.3.4.zip',
+  'pkgsrc'    => "${build_dir}/tgzs/ruby-shadow-2.3.4.zip",
+  'srcdir'    => "${src}/ruby-shadow-2.3.4",
+  'extract'   => 'unzip %PKGSRC%',
   'configure' => "make clean; ${prefix}/bin/ruby extconf.rb",
   'make'      => 'gmake CC=\'gcc -static-libgcc\'',
   'install'   => 'gmake install',
