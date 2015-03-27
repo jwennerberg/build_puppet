@@ -1,0 +1,1 @@
+settings.RedHat-6.6.pl
