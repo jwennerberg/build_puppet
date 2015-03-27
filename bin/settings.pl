@@ -126,11 +126,11 @@ $ruby193p547 = {
   },
 };
 
-$ruby200p598 = {
+$ruby200p643 = {
   'name'      => 'ruby-2.0.0',
-  'fetch'     => 'wget ftp://ftp.ruby-lang.org/pub/ruby/ruby-2.0.0-p598.tar.gz',
-  'pkgsrc'    => $build_dir . '/tgzs/ruby-2.0.0-p598.tar.gz',
-  'srcdir'    => "${src}/ruby-2.0.0-p598",
+  'fetch'     => 'wget ftp://ftp.ruby-lang.org/pub/ruby/ruby-2.0.0-p643.tar.gz',
+  'pkgsrc'    => $build_dir . '/tgzs/ruby-2.0.0-p643.tar.gz',
+  'srcdir'    => "${src}/ruby-2.0.0-p643",
   'extract'    => 'gunzip -c  %PKGSRC% | tar xvf -',
   'configure' => "make clean; ./configure --disable-install-doc --prefix=${prefix} LDFLAGS=\'-static-libgcc -L${prefix}/lib -R${prefix}/lib\' CPPFLAGS=-I${prefix}/include",
   'make'      => 'make',
@@ -235,7 +235,7 @@ $puppet375 = {
   readline63
   openssl101l
   libyaml015
-  ruby200p598
+  ruby200p643
   rubyshadow234
   augeas110
   ruby_augeas050

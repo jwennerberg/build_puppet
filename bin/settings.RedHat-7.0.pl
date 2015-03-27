@@ -38,8 +38,8 @@ $ruby193p547 = {
   'configure' => "make clean; ./configure --prefix=${prefix} LDFLAGS=\'-static-libgcc -L${prefix}/lib -Wl,-rpath,${prefix}/lib \' CPPFLAGS=-I${prefix}/include",
 };
 
-$ruby200p481 = {
-  %{$ruby200p481},
+$ruby200p643 = {
+  %{$ruby200p643},
   'configure' => "make clean; ./configure --prefix=${prefix} LDFLAGS=\'-static-libgcc -L${prefix}/lib -Wl,-rpath,${prefix}/lib \' CPPFLAGS=-I${prefix}/include",
 };
 

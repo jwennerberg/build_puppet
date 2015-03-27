@@ -28,8 +28,8 @@ $openssl101l = {
   'configure' => "make clean; ./Configure  -L${prefix}/lib -I${prefix}/include shared zlib-dynamic --prefix=${prefix} --openssldir=${prefix} ${openssl_compiler} -static-libgcc",
 };
 
-$ruby200p598 = {
-  %{$ruby200p598},
+$ruby200p643 = {
+  %{$ruby200p643},
   'configure' => "make clean; ./configure --disable-install-doc --prefix=${prefix} LDFLAGS=\'-static-libgcc -L${prefix}/lib -Wl,-rpath,${prefix}/lib \' CPPFLAGS=-I${prefix}/include",
 };
 
