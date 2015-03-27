@@ -23,8 +23,8 @@ $libxml2292 = {
 
 unshift @packages, 'libxml2292',;
 
-$openssl101l = {
-  %{$openssl101l},
+$openssl100r = {
+  %{$openssl100r},
   'configure' => "make clean; ./Configure  -L${prefix}/lib -I${prefix}/include shared zlib-dynamic --prefix=${prefix} --openssldir=${prefix} ${openssl_compiler} -static-libgcc",
 };
 
