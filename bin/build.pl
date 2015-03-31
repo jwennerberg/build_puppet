@@ -161,6 +161,7 @@ sub build {
     print $_;
   }
   close CMD;
+  logprint "RETURNCODE: " . $p->{'name'}, ",configure,$?\n";
 
   logprint "\n\nmake: " . $p->{'make'}, "\n";
   $cmd = expand ($p, 'make');
@@ -170,6 +171,7 @@ sub build {
     print $_;
   }
   close CMD;
+  logprint "RETURNCODE: " . $p->{'name'}, ",make,$?\n";
 
   logprint "\n\nInstall: " . $p->{'install'}, "\n";
   $cmd = expand ($p, 'install');
@@ -179,6 +181,7 @@ sub build {
     print $_;
   }
   close CMD;
+  logprint "RETURNCODE: " . $p->{'name'}, ",install,$?\n";
 
   while (($k, $v) = each %remember) {
     $ENV{$k} = $v;
